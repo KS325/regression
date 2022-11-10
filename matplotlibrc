@@ -1,0 +1,6 @@
+# 数式のフォントをLaTeX風に
+mathtext.fontset: cm
+
+# グラフを左右の余白なしで表示する
+axes.xmargin: 0.0
+
