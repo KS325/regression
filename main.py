@@ -22,13 +22,16 @@ def main():
     X_s = x_s ** p
     ##係数aを求める
     y_s = y_sample[:, np.newaxis]
-    X_inv = np.linalg.inv(X_s.T @ X_s) # invが逆行列
+    X_inv = np.linalg.inv(X_s.T @ X_s) # linalgは線形, invが逆行列を示す
     a = X_inv @ X_s.T @ y_s # .T で転置を表せる
+    ## yの予測値を計算
+    y_pred = (x[:, np.newaxis] ** p) @ a
 
     # グラフの作成
     fig = Figure()
-    ax = fig.add_subplot(1, 1, 1) # 縦に1つ，横に1つ で分けた，右上
+    ax = fig.add_subplot(1, 1, 1) # 縦に1つ，横に1つ で分けた，右上(第一象限)
     ax.plot(x, y, label = '真の関数 $f$')
+    ax.plot(x, y_pred, label = '回帰関数 $\\hat{f}$')
     ax.scatter(x_sample, y_sample, color = 'red', label = '学習サンプル')
     ax.legend()
     ax.set_title('$y = \\sin (\\pi x)$')
