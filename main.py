@@ -20,9 +20,10 @@ def main():
     p = np.arange(d + 1)[np.newaxis, :]
     x_s = x_sample[:, np.newaxis]
     X_s = x_s ** p
-    print(p)
-    print(x_s)
-    print(X_s)
+    ##係数aを求める
+    y_s = y_sample[:, np.newaxis]
+    X_inv = np.linalg.inv(X_s.T @ X_s) # invが逆行列
+    a = X_inv @ X_s.T @ y_s # .T で転置を表せる
 
     # グラフの作成
     fig = Figure()
