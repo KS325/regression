@@ -25,7 +25,14 @@ def main():
     X_inv = np.linalg.inv(X_s.T @ X_s) # linalgは線形, invが逆行列を示す
     a = X_inv @ X_s.T @ y_s # .T で転置を表せる
     ## yの予測値を計算
-    y_pred = (x[:, np.newaxis] ** p) @ a
+    y_pred = np.squeeze((x[:, np.newaxis] ** p) @ a) # np.squeezeは配列を一次元に
+
+    # 評価指標の算出
+    norm_diff = np.sum(np.abs(y - y_pred)) # np.abs で絶対値, np.sum は和
+    norm_y = np.sum(np.abs(y))
+    eps_score = 1e-8
+    score = norm_diff / (norm_y + eps_score)
+    print(f'{score = :.3f}')
 
     # グラフの作成
     fig = Figure()
