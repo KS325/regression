@@ -4,3 +4,13 @@ mathtext.fontset: cm
 # グラフを左右の余白なしで表示する
 axes.xmargin: 0.0
 
+#上下左右にメモリを表示
+xtick.top: True
+xtick.bottom: True
+ytick.left: True
+ytick.right: True
+
+#メモリを内側にする
+xtick.direction: in
+ytick.direction: in
+
