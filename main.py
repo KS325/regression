@@ -4,19 +4,27 @@ import japanize_matplotlib as _
 
 
 def main():
+    # 実験条件
+    x_min = -1
+    x_max = 1
+    n_train = 20  # 学習サンプル（赤い点）の数
+    n_test = 101
+    noise_ratio = 0.05  # ノイズの割合
+    eps_score = 1e-8
+    d = 3  #多項式フィッティングの設定
+
     # x, f(x)の準備
-    x = np.linspace(-1, 1, 101) # -1~1の間を101等分（両端を含む）
+    x = np.linspace(x_min, x_max, n_test) # -1~1の間を101等分（両端を含む）
     y = np.sin(np.pi * x)
 
     # サンプルの準備
-    x_sample = np.random.uniform(-1, 1, (20, )) # 右端，左端，量
+    x_sample = np.random.uniform(x_min, x_max, (n_train, )) # 右端，左端，量
     range_y = np.max(y) - np.min(y)
-    noise_sample = np.random.normal(0, range_y * 0.05, (20, ))
+    noise_sample = np.random.normal(0, range_y * noise_ratio, (n_train, ))
     y_sample = np.sin(np.pi * x_sample) + noise_sample
 
     # 多項式フィッティング
     ## Xを作る
-    d = 3
     p = np.arange(d + 1)[np.newaxis, :]
     x_s = x_sample[:, np.newaxis]
     X_s = x_s ** p
@@ -30,7 +38,6 @@ def main():
     # 評価指標の算出
     norm_diff = np.sum(np.abs(y - y_pred)) # np.abs で絶対値, np.sum は和
     norm_y = np.sum(np.abs(y))
-    eps_score = 1e-8
     score = norm_diff / (norm_y + eps_score)
     print(f'{score = :.3f}')
 
