@@ -20,3 +20,10 @@ class PolyRegressor:
         # np.squeeze は配列を一次元にする
         return y_pred
 
+def build_regressor(regressor_name, regressor_kwargs):
+    REGRESSORS = dict(
+        poly = PolyRegressor
+    )
+    regressor_cls = REGRESSORS[regressor_name]
+    init_kwargs = regressor_kwargs[regressor_name]
+    return regressor_cls(**init_kwargs)
