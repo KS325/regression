@@ -2,6 +2,8 @@ import numpy as np
 from matplotlib.figure import Figure
 import japanize_matplotlib as _
 
+from regressor import PolyRegressor
+
 def calculate_score(y, y_pred, eps_score):
     norm_diff = np.sum(np.abs(y - y_pred))  # np.abs で絶対値, np.sum は和
     norm_y = np.sum(np.abs(y))
@@ -35,26 +37,6 @@ def save_graph(
         ax.plot(x, y_pred, color = 'C1', label = '回帰関数 $\\hat{f}$')   
     ax.legend()
     fig.savefig(filename)
-
-class PolyRegressor:
-    def __init__(self, d):
-        self.d = d
-        self.p = np.arange(d + 1)[np.newaxis, :]
-    
-    def fit(self, x_sample, y_sample):
-        ## Xを作る
-        x_s = x_sample[:, np.newaxis]
-        X_s = x_s ** self.p
-        ##係数aを求める
-        y_s = y_sample[:, np.newaxis]
-        X_inv = np.linalg.inv(X_s.T @ X_s)  # linalgは線形, invが逆行列を示す
-        self.a = X_inv @ X_s.T @ y_s  # .T で転置を表せる
-    
-    def predict(self,x):
-        # yの予測値を計算
-        y_pred = np.squeeze((x[:, np.newaxis] ** self.p) @ self.a)  
-        # np.squeeze 配列を一次元に
-        return y_pred
 
 def main():
     # 実験条件
