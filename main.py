@@ -51,7 +51,7 @@ def main():
     regressor_name = 'gp'
     regressor_kwargs = dict(
         poly = dict(
-            d = 3
+            d = 5
         ),
         gp = dict(
             sigma_x = 0.2,
